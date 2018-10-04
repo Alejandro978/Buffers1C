@@ -11,7 +11,7 @@ public class GestionEventos {
 
 	private GestionDatos model;
 	private LaunchView view;
-	private ActionListener actionListener_comparar, actionListener_buscar;
+	private ActionListener actionListener_comparar, actionListener_buscar,guardarLibro;
 
 	public GestionEventos(GestionDatos model, LaunchView view) {
 		this.model = model;
@@ -34,7 +34,7 @@ public class GestionEventos {
 			}
 		};
 		view.getComparar().addActionListener(actionListener_comparar);
-		//2º L fuinción de buscar Palabra
+		//2º La fuinción de buscar Palabra
 		actionListener_buscar = new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				// TODO: Llamar a la función call_buscarPalabra
@@ -43,6 +43,16 @@ public class GestionEventos {
 			}
 		};
 		view.getBuscar().addActionListener(actionListener_buscar);
+		
+		guardarLibro = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				call_guardarLibro();
+			}
+		};
+		view.getBtnGuardarLibro().addActionListener(guardarLibro);
 	}
 
 	private boolean call_compararContenido() {
@@ -74,4 +84,19 @@ public class GestionEventos {
 		return 1;
 	}
 
+	private void call_guardarLibro() {
+		try {
+			model.guardarLibro(
+					Integer.parseInt(view.getTextFieldIdentificador().getText()),
+					Integer.parseInt(view.getTextFieldAñoPublicacion().getText()),
+					Integer.parseInt(view.getTextFieldNumeroDePaginas().getText()),
+					view.getTextFieldTitulo().getText(),
+					view.getTextFieldAutor().getText(),
+					view.getTextFieldEditor().getText());
+			view.getTextArea().setText("Libro creado con éxito");
+		} catch (NumberFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,9 +1,12 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class GestionDatos {
 
@@ -109,5 +112,18 @@ public class GestionDatos {
 		}
 		
 	}	
-
+	
+	public void guardarLibro(int identificador,int añoPublicacion,int numeroPaginas,String titulo,String autor,String editor) throws FileNotFoundException, IOException {
+	
+		File f1= new File(String.valueOf(identificador));
+	Libro l1= new Libro(identificador,añoPublicacion,numeroPaginas,titulo,autor,editor);
+	
+	//Creamos el objecto ObjectOutputStream a nullo que será el nombre del fichero que le pasaremos por paramentro
+	ObjectOutputStream out = null;
+	//Lo igualamos al fichero
+	out = new ObjectOutputStream(new FileOutputStream(f1));
+	//Escribimos dentro del fichero el libro
+	out.writeObject(l1);
+	
+	}
 }
